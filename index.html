@@ -2,7 +2,48 @@
 <html>
 
   <head>
-    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <style>
+       .pagination {
+            display: inline-block;
+            }
+
+            .pagination a {
+            color: black;
+            float: top;
+            padding: 8px 16px;
+            text-decoration: none;
+            }
+
+            .pagination a.active {
+            background-color: blue;
+            color: white;
+            }
+
+            .pagination a:hover:not(.active) {
+            background-color: #ddd;
+            }
+
+            body {
+            font: 11px sans-serif;
+            }
+
+            .axis path,.axis line {
+            fill: none;
+            stroke: #000;
+            shape-rendering: crispEdges;
+            }
+
+            .dot {
+            stroke: #000;
+            }
+
+            .tooltip {
+            position: absolute;
+            width: 200px;
+            height: 28px;
+            pointer-events: none;
+            }
+    </style>
   </head>
   
   <h1>Hello World!</h1> 
