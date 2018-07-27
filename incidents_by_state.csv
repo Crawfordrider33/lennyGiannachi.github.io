@@ -1,0 +1,52 @@
+state,state_abrev,n_incidents,n_injured,n_killed
+Alabama,AL,5124,2779,1745
+Alaska,AK,1288,306,256
+Arizona,AZ,2182,1023,1009
+Arkansas,AR,2650,1264,730
+California,CA,15210,7212,5258
+Colorado,CO,2968,1054,735
+Connecticut,CT,2906,1201,324
+Delaware,DE,1579,825,209
+District of Columbia,DC,3021,1354,434
+Florida,FL,14210,6693,3642
+Georgia,GA,8507,3853,2328
+Hawaii,HI,270,77,62
+Idaho,ID,610,140,152
+Illinois,IL,16713,12942,3244
+Indiana,IN,5524,2825,1512
+Iowa,IA,2401,785,263
+Kansas,KS,1996,876,504
+Kentucky,KY,3945,1769,989
+Louisiana,LA,7664,4158,2050
+Maine,ME,849,129,104
+Maryland,MD,5427,3004,1612
+Massachusetts,MA,5611,1621,450
+Michigan,MI,5405,2802,1466
+Minnesota,MN,2089,852,435
+Mississippi,MS,3328,1747,1070
+Missouri,MO,6266,3370,2008
+Montana,MT,597,123,149
+Nebraska,NE,1542,643,214
+Nevada,NV,1841,895,738
+New Hampshire,NH,917,134,87
+New Jersey,NJ,5163,2468,1111
+New Mexico,NM,1564,519,458
+New York,NY,9375,4909,1638
+North Carolina,NC,8275,4385,2117
+North Dakota,ND,542,123,66
+Ohio,OH,9653,5426,2369
+Oklahoma,OK,3252,1458,897
+Oregon,OR,2147,655,415
+Pennsylvania,PA,8433,4818,2259
+Rhode Island,RI,845,333,58
+South Carolina,SC,6572,2892,1521
+South Dakota,SD,518,101,83
+Tennessee,TN,7251,4268,1726
+Texas,TX,12901,5732,4736
+Utah,UT,1016,369,272
+Vermont,VT,452,70,53
+Virginia,VA,5656,3379,1387
+Washington,WA,3234,1204,799
+West Virginia,WV,1495,615,312
+Wisconsin,WI,4411,1999,816
+Wyoming,WY,480,52,63
