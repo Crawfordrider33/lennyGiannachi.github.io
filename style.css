@@ -1,0 +1,42 @@
+
+.title{
+    display: inline-block;
+    border: solid 3px black;
+}
+
+.nav {
+    display: inline-block;
+    border: solid 3px black;
+}
+
+.nav a {
+    color: black;
+    font: serif;
+    float: top;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+.nav a.active {
+    background-color: rgb(50, 50, 56);
+    color: white;
+}
+
+.nav a:hover:not(.active) {
+    background-color: #ddd;
+}
+
+.viz{
+    border: solid 3px black;
+    position:relative;
+    display: inline-block;
+    height: 500px;
+    width: 960px;
+}
+
+.desc{
+    display: inline-block;
+    border: solid 3px black;
+    height: 700px;
+    width: 500px;
+}
