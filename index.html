@@ -2,7 +2,7 @@
 <html>
 <head>
     <script src="https://d3js.org/d3.v4.js"></script> 
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 
     <style>
     
@@ -18,7 +18,7 @@
 
     <!--Title-->
     <div class="title">
-
+        <h1>Gun Violence in the United States</h1>
     </div>
 
     <!--Navigation-->
@@ -31,7 +31,6 @@
     </div>
 
     <!--D3 Visualization-->
-    <div class="viz">
         <script>
             // set the dimensions and margins of the graph
             var margin = {top: 20, right: 20, bottom: 30, left: 40},
@@ -59,9 +58,13 @@
                 data.forEach(function(d) {
                     d.n_incidents = +d.n_incidents;
                 });
+
+                 data.sort(function(a, b) {
+                    return b.n_incidents - a.n_incidents;
+      });
                     
             // Scale the range of the data in the domains
-            x.domain(data.map(function(d) { return d.state; }));
+            x.domain(data.map(function(d) { return d.state_abrev; }));
             y.domain([0, d3.max(data, function(d) { return d.n_incidents; })]);
                     
             // append the rectangles for the bar chart
@@ -69,11 +72,34 @@
             .data(data)
             .enter().append("rect")
             .attr("class", "bar")
-            .attr("x", function(d) { return x(d.state); })
+            .attr("x", function(d) { return x(d.state_abrev); })
             .attr("width", x.bandwidth())
             .attr("y", function(d) { return y(d.n_incidents); })
-            .attr("height", function(d) { return height - y(d.n_incidents); });
-            
+            .attr("height", function(d) { return height - y(d.n_incidents); })
+            .on("mouseover", function(){
+                tooltip.style("display",null);
+                tooltip.select("text").text(d.State +","+ d.n_incidents);
+            })
+            .on("mouseout", function(){
+                tooltip.style("display","none");
+            })
+            .on("mousemove", function(){
+                var xPos = d3.mouse(this)[0] - 15;
+                var yPos = d3.mouse(this)[1] - 55;
+                tooltip.attr("transform", "translate(" + xPos+","+yPos+")");
+                
+           });
+
+           var tooltip = svg.append("g")
+           .attr("class", tooltip)
+           .style("display","none");
+
+           tooltip.append("text")
+           .attr("x",15)
+           .attr("dy", "1.2em")
+           .style("font-size", "1.25em")
+           .attr("font-weight","bold");
+           
             // add the x Axis
             svg.append("g")
             .attr("transform", "translate(0," + height + ")")
@@ -86,11 +112,10 @@
             });
                
         </script>             
-    </div>
+   
 
     <!--Slide Description-->
     <div class="desc">
-
 
     </div>
 
