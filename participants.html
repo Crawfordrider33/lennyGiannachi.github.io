@@ -21,11 +21,20 @@
 }
 
 .tooltip{
-  text-anchor: middle;
+  text-anchor:middle;
   font-family: sans-serif;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: bold;
-  fill:black; 
+  fill:black;
+}
+
+#hint{
+    top:130px;
+    left:838px;
+    font-size: 15px;
+    font-weight: bold;
+    font-family: Georgia, serif;
+    position: absolute;
 }
 
     
@@ -47,14 +56,18 @@
         <a href="incidents.html">2</a>
         <a class="active" href="participants.html">3</a>
     </div>
+    
+    <div id="hint">
+        Select Group to Filter:
+    </div>
 
     <!--D3 Visualization-->
     
             <script>
 
-                    var margin = {top: 20, right: 20, bottom: 30, left: 40},
-                        width = 1000 - margin.left - margin.right,
-                        height = 500 - margin.top - margin.bottom;
+                    var margin = {top: 60, right: 100, bottom: 80, left: 80},
+                        width = 1100 - margin.left - margin.right,
+                        height = 700 - margin.top - margin.bottom;
                     
                     var x = d3.scale.ordinal()
                         .rangeRoundBands([0, width], .1);
@@ -64,8 +77,6 @@
                     
                     var color = d3.scale.ordinal()
                         .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b"]);
-                    
-                    //, "#a05d56", "#d0743c", "#ff8c00"
                     
                     var xAxis = d3.svg.axis()
                         .scale(x)
@@ -114,19 +125,35 @@
                       svg.append("g")
                           .attr("class", "y axis")
                           .call(yAxis)
-                        .append("text")
+                          .append("text")
                           .attr("transform", "rotate(-90)")
                           .attr("y", 6)
                           .attr("dy", ".71em")
                           .style("text-anchor", "end");
-                          //.text("Population");
+
+                                svg.append("text")             
+      .attr("transform",
+            "translate(" + (width/2) + " ," + 
+                           (height + margin.top -10) + ")")
+      .style("text-anchor", "middle")
+      .text("Age Group");
+
+                    svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - 70)
+        .attr("x", 0 - (height / 2))
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .text("Total Incidents")
+        .attr("class", "y axis label");
+               
+                
                     
                       var state = svg.selectAll(".state")
-                          .data(data)
+                    .data(data)
                         .enter().append("g")
                           .attr("class", "g")
                           .attr("transform", function(d) { return "translate(" + "0" + ",0)"; });
-                          //.attr("transform", function(d) { return "translate(" + x(d.State) + ",0)"; })
                     
                       state.selectAll("rect")
                           .data(function(d) {
@@ -135,12 +162,12 @@
                         .enter().append("rect")
                           .attr("width", x.rangeBand())
                           .attr("y", function(d) { return y(d.y1); })
-                          .attr("x",function(d) { //add to stock code
+                          .attr("x",function(d) { 
                               return x(d.mystate)
                             })
                           .attr("height", function(d) { return y(d.y0) - y(d.y1); })
                           .attr("class", function(d) {
-                            classLabel = d.name.replace(/\s/g, ''); //remove spaces
+                            classLabel = d.name.replace(/\s/g, ''); 
                             return "class" + classLabel;
                           })
                           .style("fill", function(d) { return color(d.name); });
@@ -153,13 +180,14 @@
                               var yPos = parseFloat(d3.select(this).attr("y"));
                               var height = parseFloat(d3.select(this).attr("height"))
                     
-                              d3.select(this).attr("stroke","blue").attr("stroke-width",0.8);
+                              d3.select(this).attr("stroke","black").attr("stroke-width",0.9);
                     
                               svg.append("text")
-                              .attr("x",xPos)
-                              .attr("y",yPos +height/2)
+                              .attr("x",xPos + 100)
+                              .attr("y",yPos + 20)
                               .attr("class","tooltip")
-                              .text(d.name +": "+ delta); 
+                              .text(d.name +"'s: "+ delta); 
+
                               
                            })
                            .on("mouseout",function(){
@@ -172,14 +200,14 @@
                       var legend = svg.selectAll(".legend")
                           .data(color.domain().slice().reverse())
                         .enter().append("g")
-                          //.attr("class", "legend")
+                          
                           .attr("class", function (d) {
-                            legendClassArray.push(d.replace(/\s/g, '')); //remove spaces
+                            legendClassArray.push(d.replace(/\s/g, '')); 
                             return "legend";
                           })
                           .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
                     
-                      //reverse order to match order in which bars are stacked    
+                        
                       legendClassArray = legendClassArray.reverse();
                     
                       legend.append("rect")
@@ -201,7 +229,7 @@
                           })
                           .on("click",function(d){        
                     
-                            if (active_link === "0") { //nothing selected, turn on this selection
+                            if (active_link === "0") { 
                               d3.select(this)           
                                 .style("stroke", "black")
                                 .style("stroke-width", 2);

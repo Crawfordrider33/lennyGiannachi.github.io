@@ -7,9 +7,45 @@
     <style>
     .line {
         fill: none;
-        stroke: rgb(95, 77, 83);
-        stroke-width: 2px;
-    } 
+        stroke: #7f5c96;
+        stroke-width: 4px;
+    }
+
+    #dropdown{
+        display:inline-block;
+        font-family: Georgia, serif;
+        top:120px;
+        left:100px;
+        position: absolute;
+    }
+
+    #stateDropdown{
+        top:140px;
+        left:210px;
+        display: inline-block;
+        position: absolute;
+    }
+
+    .annotate{
+    position: absolute;
+    top:130px;
+    left:15px;
+}
+
+.annotate_txt{
+    position: absolute;
+    height: 80px;
+    width: 150px;
+    font-family: sans-serif;
+    border: solid 2px #ddd;
+    top:217px;
+    left:215px;
+    padding-top: 5px;
+    padding-right: 5px;
+    padding-bottom: 3px;
+    padding-left: 5px;
+}
+
     </style>
 </head>
 
@@ -27,18 +63,26 @@
         <a class="active" href="incidents.html">2</a>
         <a href="participants.html">3</a>
         <a href="participants.html">&raquo;</a>
+        
     </div>
     
-    <div id = "fruitDropdown"></div>
+    <div id="dropdown">
+        <h4>Select State:   </h3>
+    </div>
+
+    <div id = "stateDropdown"></div> 
+
     <div id="graph"></div>
+
+    <div id="annotation"></div>
 
     <!--D3 Visualization-->
     <div class="viz">
            <script>
             // Set the margins
-var margin = {top: 60, right: 100, bottom: 20, left: 80},
-  width = 1000 - margin.left - margin.right,
-  height = 500 - margin.top - margin.bottom;
+var margin = {top: 65, right: 100, bottom: 80, left: 80},
+  width = 1100 - margin.left - margin.right,
+  height = 700 - margin.top - margin.bottom;
 
 
 var formatYear = d3.timeFormat("%Y");
@@ -52,8 +96,8 @@ var y = d3.scaleLinear().range([height, 0]);
 
 // Define the line
 var valueLine = d3.line()
-    .x(function(d) { return x(d.Month); })
-    .y(function(d) { return y(+d.Sales); })
+    .x(function(d) { return x(d.Year); })
+    .y(function(d) { return y(+d.Incidents); })
 
 // Create the svg canvas in the "graph" div
 var svg = d3.select("#graph")
@@ -72,24 +116,24 @@ d3.csv("data/incidents_by_year.csv", function(error, data) {
   
    // Format the data
   data.forEach(function(d) {
-      d.Month = parseYear(d.year);
-      d.Sales = +d.n_incidents;
-      d.Fruit = d.state;
-      d.Year = d.included;
+      d.Year = parseYear(d.year);
+      d.Incidents = +d.n_incidents;
+      d.State = d.state;
+      d.Include = d.included;
   });
 
   var nest = d3.nest()
 	  .key(function(d){
-	    return d.Fruit;
+	    return d.State;
 	  })
 	  .key(function(d){
-	  	return d.Year;
+	  	return d.Include;
 	  })
 	  .entries(data)
 
   // Scale the range of the data
-  x.domain(d3.extent(data, function(d) { return d.Month; }));
-  y.domain([0, d3.max(data, function(d) { return d.Sales; })]);
+  x.domain(d3.extent(data, function(d) { return d.Year; }));
+  y.domain([0, d3.max(data, function(d) { return d.Incidents; })]);
   
   // Set up the x axis
   var xaxis = svg.append("g")
@@ -97,24 +141,27 @@ d3.csv("data/incidents_by_year.csv", function(error, data) {
        .attr("class", "x axis")
        .call(d3.axisBottom(x)
           .ticks(d3.timeYear)
-          .tickSize(0, 0)
           .tickFormat(d3.timeFormat("%Y"))
-          .tickSizeInner(0)
           .tickPadding(10));
+
+            svg.append("text")             
+      .attr("transform",
+            "translate(" + (width/2) + " ," + 
+                           (height + margin.top -10) + ")")
+      .style("text-anchor", "middle")
+      .text("Year");
 
   // Add the Y Axis
    var yaxis = svg.append("g")
        .attr("class", "y axis")
        .call(d3.axisLeft(y)
           .ticks(5)
-          .tickSizeInner(0)
-          .tickPadding(6)
-          .tickSize(0, 0));
+          .tickPadding(6));
   
   // Add a label to the y axis
   svg.append("text")
         .attr("transform", "rotate(-90)")
-        .attr("y", 0 - 60)
+        .attr("y", 0 - 70)
         .attr("x", 0 - (height / 2))
         .attr("dy", "1em")
         .style("text-anchor", "middle")
@@ -122,9 +169,9 @@ d3.csv("data/incidents_by_year.csv", function(error, data) {
         .attr("class", "y axis label");
 
   // Create a dropdown
-    var fruitMenu = d3.select("#fruitDropdown")
+    var stateMenu = d3.select("#stateDropdown")
 
-    fruitMenu
+    stateMenu
 		.append("select")
 		.selectAll("option")
         .data(nest)
@@ -139,23 +186,23 @@ d3.csv("data/incidents_by_year.csv", function(error, data) {
         .property("selected", function(d){ return d.key === "Illinois"; })
 
  
- 	// Function to create the initial graph
- 	var initialGraph = function(fruit){
+ 	
+ 	var initialGraph = function(state){
 
- 		// Filter the data to include only fruit of interest
- 		var selectFruit = nest.filter(function(d){
-                return d.key == fruit;
+ 		
+ 		var selectState = nest.filter(function(d){
+                return d.key == state;
               })
 
-	    var selectFruitGroups = svg.selectAll(".fruitGroups")
-		    .data(selectFruit, function(d){
+	    var selectStateGroups = svg.selectAll(".stateGroups")
+		    .data(selectState, function(d){
 		      return d ? d.key : this.key;
 		    })
 		    .enter()
 		    .append("g")
-		    .attr("class", "fruitGroups")
+		    .attr("class", "stateGroups")
 
-		var initialPath = selectFruitGroups.selectAll(".line")
+		var initialPath = selectStateGroups.selectAll(".line")
 			.data(function(d) { return d.values; })
 			.enter()
 			.append("path")
@@ -168,24 +215,24 @@ d3.csv("data/incidents_by_year.csv", function(error, data) {
 
  	}
 
- 	// Create initial graph
+ 	
  	initialGraph("Illinois")
 
 
  	// Update the data
- 	var updateGraph = function(fruit){
+ 	var updateGraph = function(state){
 
- 		// Filter the data to include only fruit of interest
- 		var selectFruit = nest.filter(function(d){
-                return d.key == fruit;
+ 		
+ 		var selectState = nest.filter(function(d){
+                return d.key == state;
               })
 
- 		// Select all of the grouped elements and update the data
-	    var selectFruitGroups = svg.selectAll(".fruitGroups")
-		    .data(selectFruit)
+ 		
+	    var selectStateGroups = svg.selectAll(".stateGroups")
+		    .data(selectState)
 
-		    // Select all the lines and transition to new positions
-            selectFruitGroups.selectAll("path.line")
+		  
+            selectStateGroups.selectAll("path.line")
                .data(function(d){
                   return (d.values);
                 })
@@ -199,16 +246,15 @@ d3.csv("data/incidents_by_year.csv", function(error, data) {
  	}
 
 
- 	// Run update function when dropdown selection changes
- 	fruitMenu.on('change', function(){
 
- 		// Find which fruit was selected from the dropdown
- 		var selectedFruit = d3.select(this)
+ 	stateMenu.on('change', function(){
+
+ 		var selectedState= d3.select(this)
             .select("select")
             .property("value")
 
-        // Run update function with the selected fruit
-        updateGraph(selectedFruit)
+     
+        updateGraph(selectedState)
 
 
     });
