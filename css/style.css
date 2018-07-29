@@ -18,7 +18,7 @@
     color: white;
 }
 
-.nav a:hover:not(.active) {
+.nav a.about, a:hover:not(.active) {
     background-color: #ddd;
 }
 
@@ -33,3 +33,4 @@
     height: 400px;
     width: 300px;
 }
+
