@@ -4,11 +4,155 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <style>
+    .title h3{
+        position: absolute;
+        top:20px;
+    }
+
+    .nav{
+        position: absolute;
+        top:100px;
+    }
+
+    #content{
+        position: absolute;
+        top:130px;
+        width: 60%;
+        font-family:  Georgia, serif;
+        font-size: 18px;
+    }
+    </style>
 </head>
 
 <body>
+
+    <!--Title-->
+    <div class="title">
+            <h1>Gun Violence in the United States</h1> 
+            <h3>By Lenny Giannachi</h3>
+        </div>
+
     <div class="nav">
         <a class="about" href="index.html">Return to Visualization</a>
+    </div>
+
+    <div id="content">
+            <p>
+                    <strong>About</strong>
+                    <br/>
+                </p>
+                <p>
+                    This narrative visualization is based on a dataset compiled by Kaggle user
+                    James Ko. It contains numerous attributes for each gun related incident
+                    recorded by the Gun Violence Archive. The purpose of the visualization is
+                    to highlight states and demographics most affected by gun violence.
+                </p>
+                <p>
+                    <a href="https://www.kaggle.com/jameslko/gun-violence-data">
+                        https://www.kaggle.com/jameslko/gun-violence-data
+                    </a>
+                    <br/>
+                    <a href="http://www.gunviolencearchive.org/">
+                        http://www.gunviolencearchive.org/
+                    </a>
+                </p>
+                <p>
+                    <strong>Model</strong>
+                </p>
+                <p>
+                    The visualization is implemented as an interactive slideshow. Each scene is
+                    embedded in a separate slide with pagination. As a user progresses through
+                    the slideshow, the level of detail and interactivity increases. The
+                    slideshow attempts to steer users towards a shared conclusion. However, the
+                    interactive nature of each scene allows users to arrive at their own
+                    conclusions as well.
+                </p>
+                <p>
+                    <strong>Scenes</strong>
+                </p>
+                <p>
+                    The scenes in the visualization use a shared template for visual
+                    consistency. All three scenes are the same overall size, use uniform axes
+                    and share the same fonts and color scheme.
+                </p>
+                <p>
+                    1. Gun Violence in the United States (2013-2017)
+                </p>
+                <p>
+                    A bar chart with state abbreviations in the x-axis and total number of
+                    incidents in the y-axis. An annotation brings attention to the bar with the
+                    highest number of incidents and tooltips are available for viewing
+                    additional details.
+                </p>
+                <p>
+                    2. Yearly Incidents
+                </p>
+                <p>
+                    A line chart with year in the x-axis and total number of incidents in the
+                    y-axis. A dropdown menu is available to cycle through state names.
+                    Selecting a state results in a transition of the plotted data.
+                </p>
+                <p>
+                    3. Participant Demographics (2013-2017)
+                </p>
+                <p>
+                    A stacked bar chart with age groups in the x-axis and total number of
+                    participants in y-axis. Gender and participation categories are available
+                    in a legend. Selecting a category filters the data and triggers a
+                    transition of the bars. Tooltips are available for viewing additional
+                    details.
+                </p>
+                <p>
+                    <strong>Annotations</strong>
+                </p>
+                <p>
+                    In the first scene, a fixed annotation is used to highlight the high number
+                    of gun related incidents in the state of Illinois. The annotation cannot be
+                    cleared and is simply intended to set the tone for the scene that follows.
+                    My intention was to highlight the state of Illinois in the first scene and
+                    begin the second scene with Illinois as the default selection. There would
+                    be additional annotations to highlight the increase of violence in recent
+                    years. An unexpected issue late in the project prevented me from including
+                    these annotations.
+                </p>
+                <p>
+                    <strong>Parameters</strong>
+                </p>
+                <p>
+                    There are several parameters throughout the narrative visualization. The
+                    scene template includes slide numbers that are used to navigate through
+                    scenes. In the second scene there are states listed in a dropdown menu. In
+                    the final scene there are demographic categories that can be toggled.
+                </p>
+                <p>
+                    <strong>Triggers</strong>
+                </p>
+                <p>
+                    When a slide number gets selected, the page transitions to the default
+                    graph of the corresponding scene. If a user navigates to the second scene
+                    they are presented with data for Illinois. Choosing a different state from
+                    the dropdown will result in an animation plotting data for that state. Upon
+                    navigating to the third scene, the user is presented with full stacked
+                    bars. Toggling options form the legend results in an animation that subsets
+                    those stacks.
+                    <br/>
+                </p>
+                <p>
+                    <strong>User</strong>
+                    <strong>Interface</strong>
+                </p>
+                <p>
+                    The second and third scenes encourage users to interact with the
+                    visualizations by prompting them to make selections. <q>Select State</q> and
+                    <q>Select Group to Filter</q> draw attention to the area of each scene that
+                    allows users to modify their current view of the data.
+                </p>
+                
+
+           
+            
+            
     </div>
 </body>
 
